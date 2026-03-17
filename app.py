@@ -59,7 +59,7 @@ class TaskHandler(http.server.SimpleHTTPRequestHandler):
         '/api/ideas': (IDEAS_FILE, []),
         '/api/power-records': (POWER_RECORDS_FILE, {"launch_date": "", "milestones": [], "kpis": {}, "notes": ""}),
         '/api/cris-velez': (CRIS_VELEZ_FILE, {"lanzamientos": [], "tareas": [], "notas": ""}),
-        '/api/tareas-app': (TAREAS_APP_FILE, {"dia": [], "mes": []}),
+        '/api/tareas-app': (TAREAS_APP_FILE, {"semana": [], "mes": [], "ano12": []}),
     }
 
     def end_headers(self):

@@ -975,28 +975,45 @@
         </div>
         <div class="view-content" id="tareasAppContainer">
             <!-- Clock -->
-            <div id="liveClock" style="text-align:center; margin-bottom:24px;">
-                <div id="clockTime" style="font-size:3.2rem; font-weight:900; letter-spacing:2px; background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;"></div>
-                <div id="clockDate" style="font-size:0.85rem; color:var(--text-dim); margin-top:4px;"></div>
+            <div id="liveClock" style="text-align:center; margin-bottom:28px;">
+                <div id="clockTime" style="font-size:3.5rem; font-weight:900; letter-spacing:3px; background:linear-gradient(135deg,#a855f7,#6366f1,#06b6d4); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;"></div>
+                <div id="clockDate" style="font-size:0.85rem; color:var(--text-dim); margin-top:6px;"></div>
             </div>
 
-            <!-- Tareas del Dia -->
-            <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
-                Tareas del Dia
-                <button class="action-btn" onclick="addTareaApp('dia')" style="font-size:0.7rem; padding:6px 14px;">+ Agregar</button>
+            <!-- 3 Cards Premium -->
+            <div id="tareasCardsHub">
+                <div class="vibe-card vibe-purple" onclick="openTareasSection('semana')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+                    <div class="vibe-icon">📅</div>
+                    <div class="vibe-title">Tareas Semana</div>
+                    <div class="vibe-desc" id="tareasSemanaBadge">0 tareas</div>
+                </div>
+                <div class="vibe-card vibe-blue" onclick="openTareasSection('mes')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+                    <div class="vibe-icon">🗓️</div>
+                    <div class="vibe-title">Tareas Mes</div>
+                    <div class="vibe-desc" id="tareasMesBadge">0 tareas</div>
+                </div>
+                <div class="vibe-card vibe-orange" onclick="openTareasSection('ano12')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+                    <div class="vibe-icon">🔥</div>
+                    <div class="vibe-title">Año de 12 Semanas</div>
+                    <div class="vibe-desc" id="tareasAno12Badge">0 tareas</div>
+                </div>
             </div>
-            <div id="tareasDiaList"></div>
 
-            <!-- Tareas del Mes -->
-            <div class="section-header" style="display:flex; justify-content:space-between; align-items:center; margin-top:28px;">
-                Tareas del Mes
-                <button class="action-btn" onclick="addTareaApp('mes')" style="font-size:0.7rem; padding:6px 14px;">+ Agregar</button>
+            <!-- Sub-vista de tareas (se muestra al tocar un card) -->
+            <div id="tareasSubView" style="display:none;">
+                <button class="action-btn secondary" onclick="closeTareasSection()" style="margin-bottom:16px;">← Volver</button>
+                <div id="tareasSubTitle" style="text-align:center; margin-bottom:20px;">
+                    <div id="tareasSubIcon" style="font-size:2.5rem;"></div>
+                    <div id="tareasSubName" style="font-size:1.2rem; font-weight:800; margin-top:6px;"></div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+                    <button class="action-btn" onclick="addTareaApp(currentTareasSection)" style="font-size:0.7rem; padding:6px 14px;">+ Agregar Tarea</button>
+                </div>
+                <div id="tareasSubList"></div>
             </div>
-            <div id="tareasMesList"></div>
 
-            <!-- Plan Maestro (task.md) -->
-            <div class="section-header" style="margin-top:28px;">Plan Maestro</div>
-            <div id="tareasModalContent"></div>
+            <!-- Plan Maestro (task.md) oculto debajo -->
+            <div id="tareasModalContent" style="display:none;"></div>
         </div>
     </div>
 
@@ -1102,7 +1119,7 @@
         let ventasData = null;
         let equipoData = null;
         let ideasData = null;
-        let tareasAppData = { dia: [], mes: [] };
+        let tareasAppData = { semana: [], mes: [], ano12: [] };
         let clockInterval = null;
         let currentPipeTab = 'compositores';
         let currentIdeaFilter = 'todos';
@@ -1244,7 +1261,14 @@
             await postJSON('/api/tasks', { content: rawMarkdown });
         }
 
-        // ============ TAREAS APP (Dia/Mes + Reloj) ============
+        // ============ TAREAS APP (Semana/Mes/Año 12 Semanas + Reloj) ============
+        let currentTareasSection = null;
+        const TAREAS_SECTIONS = {
+            semana: { name: 'Tareas Semana', icon: '📅', prompt: 'Nueva tarea de la semana:' },
+            mes: { name: 'Tareas Mes', icon: '🗓️', prompt: 'Nueva tarea del mes:' },
+            ano12: { name: 'Año de 12 Semanas', icon: '🔥', prompt: 'Nueva meta / tarea del año de 12 semanas:' },
+        };
+
         function startClock() {
             function tick() {
                 const now = new Date();
@@ -1269,29 +1293,60 @@
 
         async function fetchTareasApp() {
             tareasAppData = await getJSON('/api/tareas-app');
-            if (!tareasAppData.dia) tareasAppData.dia = [];
+            if (!tareasAppData.semana) tareasAppData.semana = [];
             if (!tareasAppData.mes) tareasAppData.mes = [];
+            if (!tareasAppData.ano12) tareasAppData.ano12 = [];
+            currentTareasSection = null;
             startClock();
-            renderTareasApp();
+            renderTareasHub();
         }
 
-        function renderTareasApp() {
-            renderTareaList('tareasDiaList', tareasAppData.dia, 'dia');
-            renderTareaList('tareasMesList', tareasAppData.mes, 'mes');
+        function renderTareasHub() {
+            document.getElementById('tareasCardsHub').style.display = 'block';
+            document.getElementById('tareasSubView').style.display = 'none';
+            // Update badges
+            const sb = document.getElementById('tareasSemanaBadge');
+            const mb = document.getElementById('tareasMesBadge');
+            const ab = document.getElementById('tareasAno12Badge');
+            if (sb) sb.textContent = `${tareasAppData.semana.length} tareas`;
+            if (mb) mb.textContent = `${tareasAppData.mes.length} tareas`;
+            if (ab) ab.textContent = `${tareasAppData.ano12.length} tareas`;
+            // Add touch glow to cards
+            document.querySelectorAll('#tareasCardsHub .vibe-card').forEach(el => {
+                el.addEventListener('touchstart', () => el.classList.add('glow'), { passive: true });
+                el.addEventListener('touchend', () => setTimeout(() => el.classList.remove('glow'), 200));
+                el.addEventListener('touchcancel', () => el.classList.remove('glow'));
+            });
         }
 
-        function renderTareaList(containerId, tareas, tipo) {
-            const c = document.getElementById(containerId);
-            if (!tareas || tareas.length === 0) {
-                c.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.3; font-size:0.8rem;">Sin tareas</div>';
+        function openTareasSection(tipo) {
+            currentTareasSection = tipo;
+            const sec = TAREAS_SECTIONS[tipo];
+            document.getElementById('tareasCardsHub').style.display = 'none';
+            document.getElementById('tareasSubView').style.display = 'block';
+            document.getElementById('tareasSubIcon').textContent = sec.icon;
+            document.getElementById('tareasSubName').textContent = sec.name;
+            renderTareaList();
+        }
+
+        function closeTareasSection() {
+            currentTareasSection = null;
+            renderTareasHub();
+        }
+
+        function renderTareaList() {
+            const c = document.getElementById('tareasSubList');
+            const tareas = tareasAppData[currentTareasSection] || [];
+            if (tareas.length === 0) {
+                c.innerHTML = '<div style="text-align:center; padding:30px; opacity:0.3; font-size:0.85rem;">Sin tareas</div>';
                 return;
             }
             c.innerHTML = tareas.map((t, i) => `
                 <div class="task-card ${t.done ? 'completed' : ''}" style="display:flex; align-items:center; gap:10px;">
-                    <div class="checkbox" onclick="toggleTareaApp('${tipo}', ${i})" style="cursor:pointer;"></div>
+                    <div class="checkbox" onclick="toggleTareaApp('${currentTareasSection}', ${i})" style="cursor:pointer;"></div>
                     <div class="task-text" style="flex:1; ${t.done ? 'text-decoration:line-through; opacity:0.4;' : ''}">${esc(t.text)}</div>
-                    <button onclick="editTareaApp('${tipo}', ${i})" style="background:none; border:none; color:var(--text-dim); font-size:0.8rem; cursor:pointer;">✏️</button>
-                    <button onclick="deleteTareaApp('${tipo}', ${i})" style="background:none; border:none; color:#ef4444; font-size:0.8rem; cursor:pointer;">🗑️</button>
+                    <button onclick="editTareaApp('${currentTareasSection}', ${i})" style="background:none; border:none; color:var(--text-dim); font-size:0.8rem; cursor:pointer;">✏️</button>
+                    <button onclick="deleteTareaApp('${currentTareasSection}', ${i})" style="background:none; border:none; color:#ef4444; font-size:0.8rem; cursor:pointer;">🗑️</button>
                 </div>
             `).join('');
         }
@@ -1301,16 +1356,17 @@
         }
 
         async function addTareaApp(tipo) {
-            const text = prompt(tipo === 'dia' ? 'Nueva tarea del dia:' : 'Nueva tarea del mes:');
+            const sec = TAREAS_SECTIONS[tipo];
+            const text = prompt(sec ? sec.prompt : 'Nueva tarea:');
             if (!text || !text.trim()) return;
             tareasAppData[tipo].push({ text: text.trim(), done: false });
-            renderTareasApp();
+            renderTareaList();
             await saveTareasApp();
         }
 
         async function toggleTareaApp(tipo, index) {
             tareasAppData[tipo][index].done = !tareasAppData[tipo][index].done;
-            renderTareasApp();
+            renderTareaList();
             await saveTareasApp();
         }
 
@@ -1320,14 +1376,14 @@
             if (text === null) return;
             if (!text.trim()) return;
             tareasAppData[tipo][index].text = text.trim();
-            renderTareasApp();
+            renderTareaList();
             await saveTareasApp();
         }
 
         async function deleteTareaApp(tipo, index) {
             if (!confirm('Eliminar esta tarea?')) return;
             tareasAppData[tipo].splice(index, 1);
-            renderTareasApp();
+            renderTareaList();
             await saveTareasApp();
         }
 
