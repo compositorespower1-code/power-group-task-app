@@ -1571,27 +1571,16 @@
 
                 <div class="section-header">Productos</div>`;
 
-            const hero = PRODUCTS[0];
-            const heroStats = ventasData.products?.[hero.key]?.stats || {};
-            const heroLeads = ventasData.products?.[hero.key]?.pipeline?.length || 0;
-            html += `
-                <div class="product-hero" onclick="currentProduct='${hero.key}'; renderVentas()">
-                    <div class="product-hero-icon">${hero.icon}</div>
-                    <div class="product-hero-name">${hero.name}</div>
-                    <div class="product-hero-tag">Premium · ${heroLeads} leads · $${formatNum(heroStats.revenue_actual || 0)}</div>
-                </div>`;
-
-            html += `<div class="product-grid">`;
-            PRODUCTS.slice(1).forEach(p => {
+            PRODUCTS.forEach(p => {
+                const pStats = ventasData.products?.[p.key]?.stats || {};
                 const pLeads = ventasData.products?.[p.key]?.pipeline?.length || 0;
                 html += `
-                    <div class="product-card" onclick="currentProduct='${p.key}'; renderVentas()">
-                        <div class="product-card-icon">${p.icon}</div>
-                        <div class="product-card-name">${p.name}</div>
-                        <div style="font-size:0.6rem; color:var(--text-dim); margin-top:4px;">${pLeads} leads</div>
+                    <div class="product-hero" onclick="currentProduct='${p.key}'; renderVentas()" style="margin-bottom:14px;">
+                        <div class="product-hero-icon">${p.icon}</div>
+                        <div class="product-hero-name">${p.name}</div>
+                        <div class="product-hero-tag">${pLeads} leads · $${formatNum(pStats.revenue_actual || 0)}</div>
                     </div>`;
             });
-            html += `</div>`;
 
             c.innerHTML = html;
 
