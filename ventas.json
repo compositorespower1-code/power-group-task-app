@@ -1,0 +1,65 @@
+{
+  "pipeline": [],
+  "stats": {
+    "month_goal": 10,
+    "month_closed": 0,
+    "revenue_goal": 50000,
+    "revenue_actual": 0
+  },
+  "products": {
+    "artista_en_gira": {
+      "pipeline": [],
+      "stats": {
+        "month_goal": 0,
+        "month_closed": 0,
+        "revenue_goal": 0,
+        "revenue_actual": 0
+      }
+    },
+    "power_records_ai": {
+      "pipeline": [],
+      "stats": {
+        "month_goal": 0,
+        "month_closed": 0,
+        "revenue_goal": 0,
+        "revenue_actual": 0
+      }
+    },
+    "producciones_musicales": {
+      "pipeline": [],
+      "stats": {
+        "month_goal": 0,
+        "month_closed": 0,
+        "revenue_goal": 0,
+        "revenue_actual": 0
+      }
+    },
+    "reto_40": {
+      "pipeline": [],
+      "stats": {
+        "month_goal": 0,
+        "month_closed": 0,
+        "revenue_goal": 0,
+        "revenue_actual": 0
+      }
+    },
+    "song_power": {
+      "pipeline": [],
+      "stats": {
+        "month_goal": 0,
+        "month_closed": 0,
+        "revenue_goal": 0,
+        "revenue_actual": 0
+      }
+    },
+    "cris_velez": {
+      "pipeline": [],
+      "stats": {
+        "month_goal": 0,
+        "month_closed": 0,
+        "revenue_goal": 0,
+        "revenue_actual": 0
+      }
+    }
+  }
+}

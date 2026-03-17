@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Smith Varela",
+    "role": "Estrategia",
+    "status": "activo",
+    "tasks": [],
+    "notes": ""
+  },
+  {
+    "id": 2,
+    "name": "Claudia Matisse",
+    "role": "Branding",
+    "status": "activo",
+    "tasks": [],
+    "notes": ""
+  },
+  {
+    "id": 3,
+    "name": "Jerrik Miller",
+    "role": "Audio",
+    "status": "activo",
+    "tasks": [],
+    "notes": ""
+  },
+  {
+    "id": 4,
+    "name": "Valeria Dominguez",
+    "role": "Styling",
+    "status": "activo",
+    "tasks": [],
+    "notes": ""
+  },
+  {
+    "id": 1773712217287,
+    "name": "Felipe",
+    "role": "Diseñador",
+    "status": "activo",
+    "tasks": [],
+    "notes": ""
+  }
+]

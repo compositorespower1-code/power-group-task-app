@@ -1,0 +1,14 @@
+{
+  "compositores": [
+    { "id": 1, "name": "Scarlett", "song": "Por definir", "stage": "produccion", "deadline": "2026-03-12", "notes": "Entregar adelanto base/maqueta para grabar voz" },
+    { "id": 2, "name": "Joangel", "song": "Por definir", "stage": "escritura", "deadline": "2026-03-12", "notes": "Definir y escoger la cancion exacta a producir" },
+    { "id": 3, "name": "Mariantonieta", "song": "Por definir", "stage": "produccion", "deadline": "2026-03-13", "notes": "Enviar adelanto de produccion" }
+  ],
+  "producciones": [
+    { "id": 1, "artist": "Old Caribe (Cris Velez)", "track": "Bendita", "status": "en_progreso", "deadline": "2026-03-30", "producer": "Cris Velez" },
+    { "id": 2, "artist": "Old Caribe (Cris Velez)", "track": "Madrecita", "status": "planificado", "deadline": "2026-04-15", "producer": "Cris Velez" }
+  ],
+  "videoclips": [
+    { "id": 1, "artist": "Old Caribe", "track": "Bendita", "status": "planificado", "director": "", "date": "" }
+  ]
+}

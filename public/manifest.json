@@ -1,0 +1,15 @@
+{
+  "name": "POWER GROUP V2",
+  "short_name": "PG V2",
+  "start_url": "/?v=2.1",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00f2ff",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/isometric/512/tasks.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

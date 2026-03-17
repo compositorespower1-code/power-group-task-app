@@ -1,0 +1,15 @@
+{
+  "launch_date": "2026-04-07",
+  "milestones": [
+    { "id": 1, "task": "Crear estructura y copy del VSL (Video Sales Letter)", "done": false, "deadline": "2026-03-20" },
+    { "id": 2, "task": "Redactar copys para anuncios de pauta (Ads)", "done": false, "deadline": "2026-03-22" },
+    { "id": 3, "task": "Disenar estructura de Landing Page de Ventas", "done": false, "deadline": "2026-03-25" },
+    { "id": 4, "task": "Configurar secuencias de email / embudos", "done": false, "deadline": "2026-03-28" }
+  ],
+  "kpis": {
+    "landing_visits": 0,
+    "signups": 0,
+    "conversions": 0
+  },
+  "notes": ""
+}
