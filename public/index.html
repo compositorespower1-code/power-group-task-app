@@ -973,7 +973,7 @@
             <button class="back-btn" onclick="closeView('tareasDiaView')">←</button>
             <h2 class="view-title">Tareas</h2>
         </div>
-        <div class="view-content" id="tareasModalContent">
+        <div class="view-content" id="tareasAppContainer">
             <!-- Clock -->
             <div id="liveClock" style="text-align:center; margin-bottom:24px;">
                 <div id="clockTime" style="font-size:3.2rem; font-weight:900; letter-spacing:2px; background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;"></div>
@@ -993,6 +993,10 @@
                 <button class="action-btn" onclick="addTareaApp('mes')" style="font-size:0.7rem; padding:6px 14px;">+ Agregar</button>
             </div>
             <div id="tareasMesList"></div>
+
+            <!-- Plan Maestro (task.md) -->
+            <div class="section-header" style="margin-top:28px;">Plan Maestro</div>
+            <div id="tareasModalContent"></div>
         </div>
     </div>
 
