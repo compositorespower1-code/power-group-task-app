@@ -984,12 +984,12 @@
             <div id="tareasCardsHub">
                 <div class="vibe-card vibe-purple" onclick="openTareasSection('semana')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
                     <div class="vibe-icon">📅</div>
-                    <div class="vibe-title">Tareas Semana</div>
+                    <div class="vibe-title">Tareas del Dia</div>
                     <div class="vibe-desc" id="tareasSemanaBadge">0 tareas</div>
                 </div>
                 <div class="vibe-card vibe-blue" onclick="openTareasSection('mes')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
                     <div class="vibe-icon">🗓️</div>
-                    <div class="vibe-title">Tareas Mes</div>
+                    <div class="vibe-title">Tareas de la Semana</div>
                     <div class="vibe-desc" id="tareasMesBadge">0 tareas</div>
                 </div>
                 <div class="vibe-card vibe-orange" onclick="openTareasSection('ano12')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
@@ -1264,8 +1264,8 @@
         // ============ TAREAS APP (Semana/Mes/Año 12 Semanas + Reloj) ============
         let currentTareasSection = null;
         const TAREAS_SECTIONS = {
-            semana: { name: 'Tareas Semana', icon: '📅', prompt: 'Nueva tarea de la semana:' },
-            mes: { name: 'Tareas Mes', icon: '🗓️', prompt: 'Nueva tarea del mes:' },
+            semana: { name: 'Tareas del Dia', icon: '📅', prompt: 'Nueva tarea del dia:' },
+            mes: { name: 'Tareas de la Semana', icon: '🗓️', prompt: 'Nueva tarea de la semana:' },
             ano12: { name: 'Año de 12 Semanas', icon: '🔥', prompt: 'Nueva meta / tarea del año de 12 semanas:' },
         };
 
