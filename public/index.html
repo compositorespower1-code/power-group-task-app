@@ -999,17 +999,37 @@
                 </div>
             </div>
 
-            <!-- Sub-vista de tareas (se muestra al tocar un card) -->
+            <!-- Sub-vista de tareas con swipe Tareas/Logros -->
             <div id="tareasSubView" style="display:none;">
                 <button class="action-btn secondary" onclick="closeTareasSection()" style="margin-bottom:16px;">← Volver</button>
-                <div id="tareasSubTitle" style="text-align:center; margin-bottom:20px;">
+                <div id="tareasSubTitle" style="text-align:center; margin-bottom:12px;">
                     <div id="tareasSubIcon" style="font-size:2.5rem;"></div>
                     <div id="tareasSubName" style="font-size:1.2rem; font-weight:800; margin-top:6px;"></div>
                 </div>
-                <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
-                    <button class="action-btn" onclick="addTareaApp(currentTareasSection)" style="font-size:0.7rem; padding:6px 14px;">+ Agregar Tarea</button>
+                <!-- Tabs Tareas / Logros -->
+                <div id="tareasLogrosTab" style="display:flex; margin-bottom:16px; border-radius:12px; overflow:hidden; background:rgba(255,255,255,0.06);">
+                    <button id="tabTareas" onclick="switchTareasTab('tareas')" style="flex:1; padding:10px; border:none; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.3s; font-family:inherit;">Tareas</button>
+                    <button id="tabLogros" onclick="switchTareasTab('logros')" style="flex:1; padding:10px; border:none; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.3s; font-family:inherit;">Logros</button>
                 </div>
-                <div id="tareasSubList"></div>
+                <!-- Swipe container -->
+                <div id="tareasSwipeContainer" style="overflow:hidden; position:relative; touch-action:pan-y;">
+                    <div id="tareasSwipeTrack" style="display:flex; width:200%; transition:transform 0.3s ease;">
+                        <!-- Panel Tareas -->
+                        <div style="width:50%; flex-shrink:0;">
+                            <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+                                <button class="action-btn" onclick="addTareaApp(currentTareasSection)" style="font-size:0.7rem; padding:6px 14px;">+ Agregar Tarea</button>
+                            </div>
+                            <div id="tareasSubList"></div>
+                        </div>
+                        <!-- Panel Logros -->
+                        <div style="width:50%; flex-shrink:0;">
+                            <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+                                <button class="action-btn" onclick="addLogroApp(currentTareasSection)" style="font-size:0.7rem; padding:6px 14px;">+ Agregar Logro</button>
+                            </div>
+                            <div id="logrosSubList"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Plan Maestro (task.md) oculto debajo -->
@@ -1119,7 +1139,7 @@
         let ventasData = null;
         let equipoData = null;
         let ideasData = null;
-        let tareasAppData = { semana: [], mes: [], ano12: [] };
+        let tareasAppData = { semana: [], mes: [], ano12: [], logros_semana: [], logros_mes: [], logros_ano12: [] };
         let clockInterval = null;
         let currentPipeTab = 'compositores';
         let currentIdeaFilter = 'todos';
@@ -1261,12 +1281,13 @@
             await postJSON('/api/tasks', { content: rawMarkdown });
         }
 
-        // ============ TAREAS APP (Semana/Mes/Año 12 Semanas + Reloj) ============
+        // ============ TAREAS APP (Semana/Mes/Año 12 Semanas + Reloj + Logros + Reorder) ============
         let currentTareasSection = null;
+        let currentTareasTab = 'tareas'; // 'tareas' or 'logros'
         const TAREAS_SECTIONS = {
-            semana: { name: 'Tareas del Dia', icon: '📅', prompt: 'Nueva tarea del dia:' },
-            mes: { name: 'Tareas de la Semana', icon: '🗓️', prompt: 'Nueva tarea de la semana:' },
-            ano12: { name: 'Año de 12 Semanas', icon: '🔥', prompt: 'Nueva meta / tarea del año de 12 semanas:' },
+            semana: { name: 'Tareas del Dia', logrosName: 'Logros del Dia', icon: '📅', prompt: 'Nueva tarea del dia:', logrosPrompt: 'Nuevo logro del dia:' },
+            mes: { name: 'Tareas de la Semana', logrosName: 'Logros de la Semana', icon: '🗓️', prompt: 'Nueva tarea de la semana:', logrosPrompt: 'Nuevo logro de la semana:' },
+            ano12: { name: 'Año de 12 Semanas', logrosName: 'Logros Año de 12 Semanas', icon: '🔥', prompt: 'Nueva meta / tarea del año de 12 semanas:', logrosPrompt: 'Nuevo logro del año de 12 semanas:' },
         };
 
         function startClock() {
@@ -1296,6 +1317,9 @@
             if (!tareasAppData.semana) tareasAppData.semana = [];
             if (!tareasAppData.mes) tareasAppData.mes = [];
             if (!tareasAppData.ano12) tareasAppData.ano12 = [];
+            if (!tareasAppData.logros_semana) tareasAppData.logros_semana = [];
+            if (!tareasAppData.logros_mes) tareasAppData.logros_mes = [];
+            if (!tareasAppData.logros_ano12) tareasAppData.logros_ano12 = [];
             currentTareasSection = null;
             startClock();
             renderTareasHub();
@@ -1304,14 +1328,12 @@
         function renderTareasHub() {
             document.getElementById('tareasCardsHub').style.display = 'block';
             document.getElementById('tareasSubView').style.display = 'none';
-            // Update badges
             const sb = document.getElementById('tareasSemanaBadge');
             const mb = document.getElementById('tareasMesBadge');
             const ab = document.getElementById('tareasAno12Badge');
             if (sb) sb.textContent = `${tareasAppData.semana.length} tareas`;
             if (mb) mb.textContent = `${tareasAppData.mes.length} tareas`;
             if (ab) ab.textContent = `${tareasAppData.ano12.length} tareas`;
-            // Add touch glow to cards
             document.querySelectorAll('#tareasCardsHub .vibe-card').forEach(el => {
                 el.addEventListener('touchstart', () => el.classList.add('glow'), { passive: true });
                 el.addEventListener('touchend', () => setTimeout(() => el.classList.remove('glow'), 200));
@@ -1321,12 +1343,14 @@
 
         function openTareasSection(tipo) {
             currentTareasSection = tipo;
+            currentTareasTab = 'tareas';
             const sec = TAREAS_SECTIONS[tipo];
             document.getElementById('tareasCardsHub').style.display = 'none';
             document.getElementById('tareasSubView').style.display = 'block';
             document.getElementById('tareasSubIcon').textContent = sec.icon;
             document.getElementById('tareasSubName').textContent = sec.name;
-            renderTareaList();
+            switchTareasTab('tareas');
+            initSwipeGesture();
         }
 
         function closeTareasSection() {
@@ -1334,15 +1358,65 @@
             renderTareasHub();
         }
 
+        // ---- Swipe between Tareas / Logros ----
+        function switchTareasTab(tab) {
+            currentTareasTab = tab;
+            const track = document.getElementById('tareasSwipeTrack');
+            const tabTareas = document.getElementById('tabTareas');
+            const tabLogros = document.getElementById('tabLogros');
+            const sec = TAREAS_SECTIONS[currentTareasSection];
+            const nameEl = document.getElementById('tareasSubName');
+            if (tab === 'tareas') {
+                track.style.transform = 'translateX(0)';
+                tabTareas.style.background = 'var(--accent)';
+                tabTareas.style.color = '#fff';
+                tabLogros.style.background = 'transparent';
+                tabLogros.style.color = 'var(--text-dim)';
+                if (nameEl) nameEl.textContent = sec.name;
+            } else {
+                track.style.transform = 'translateX(-50%)';
+                tabLogros.style.background = 'var(--accent2)';
+                tabLogros.style.color = '#fff';
+                tabTareas.style.background = 'transparent';
+                tabTareas.style.color = 'var(--text-dim)';
+                if (nameEl) nameEl.textContent = sec.logrosName;
+            }
+            renderTareaList();
+            renderLogroList();
+        }
+
+        function initSwipeGesture() {
+            const container = document.getElementById('tareasSwipeContainer');
+            let startX = 0;
+            let isDragging = false;
+            container.ontouchstart = (e) => { startX = e.touches[0].clientX; isDragging = true; };
+            container.ontouchmove = (e) => { /* allow native scroll */ };
+            container.ontouchend = (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                const diff = e.changedTouches[0].clientX - startX;
+                if (Math.abs(diff) > 60) {
+                    if (diff < 0 && currentTareasTab === 'tareas') switchTareasTab('logros');
+                    else if (diff > 0 && currentTareasTab === 'logros') switchTareasTab('tareas');
+                }
+            };
+        }
+
+        // ---- Render Tareas List with reorder buttons ----
         function renderTareaList() {
             const c = document.getElementById('tareasSubList');
+            if (!currentTareasSection) return;
             const tareas = tareasAppData[currentTareasSection] || [];
             if (tareas.length === 0) {
                 c.innerHTML = '<div style="text-align:center; padding:30px; opacity:0.3; font-size:0.85rem;">Sin tareas</div>';
                 return;
             }
             c.innerHTML = tareas.map((t, i) => `
-                <div class="task-card ${t.done ? 'completed' : ''}" style="display:flex; align-items:center; gap:10px;">
+                <div class="task-card ${t.done ? 'completed' : ''}" style="display:flex; align-items:center; gap:8px;">
+                    <div style="display:flex; flex-direction:column; gap:2px;">
+                        <button onclick="moveTarea('${currentTareasSection}', ${i}, -1)" style="background:none; border:none; color:${i === 0 ? 'rgba(255,255,255,0.1)' : 'var(--accent)'}; font-size:0.7rem; cursor:pointer; padding:2px 4px;" ${i === 0 ? 'disabled' : ''}>▲</button>
+                        <button onclick="moveTarea('${currentTareasSection}', ${i}, 1)" style="background:none; border:none; color:${i === tareas.length - 1 ? 'rgba(255,255,255,0.1)' : 'var(--accent)'}; font-size:0.7rem; cursor:pointer; padding:2px 4px;" ${i === tareas.length - 1 ? 'disabled' : ''}>▼</button>
+                    </div>
                     <div class="checkbox" onclick="toggleTareaApp('${currentTareasSection}', ${i})" style="cursor:pointer;"></div>
                     <div class="task-text" style="flex:1; ${t.done ? 'text-decoration:line-through; opacity:0.4;' : ''}">${esc(t.text)}</div>
                     <button onclick="editTareaApp('${currentTareasSection}', ${i})" style="background:none; border:none; color:var(--text-dim); font-size:0.8rem; cursor:pointer;">✏️</button>
@@ -1351,6 +1425,52 @@
             `).join('');
         }
 
+        // ---- Render Logros List with reorder buttons ----
+        function renderLogroList() {
+            const c = document.getElementById('logrosSubList');
+            if (!currentTareasSection) return;
+            const logrosKey = 'logros_' + currentTareasSection;
+            const logros = tareasAppData[logrosKey] || [];
+            if (logros.length === 0) {
+                c.innerHTML = '<div style="text-align:center; padding:30px; opacity:0.3; font-size:0.85rem;">Sin logros registrados</div>';
+                return;
+            }
+            c.innerHTML = logros.map((l, i) => `
+                <div class="task-card" style="display:flex; align-items:center; gap:8px; border-left:3px solid var(--accent2);">
+                    <div style="display:flex; flex-direction:column; gap:2px;">
+                        <button onclick="moveLogro('${currentTareasSection}', ${i}, -1)" style="background:none; border:none; color:${i === 0 ? 'rgba(255,255,255,0.1)' : 'var(--accent2)'}; font-size:0.7rem; cursor:pointer; padding:2px 4px;" ${i === 0 ? 'disabled' : ''}>▲</button>
+                        <button onclick="moveLogro('${currentTareasSection}', ${i}, 1)" style="background:none; border:none; color:${i === logros.length - 1 ? 'rgba(255,255,255,0.1)' : 'var(--accent2)'}; font-size:0.7rem; cursor:pointer; padding:2px 4px;" ${i === logros.length - 1 ? 'disabled' : ''}>▼</button>
+                    </div>
+                    <div style="font-size:1.1rem;">🏆</div>
+                    <div class="task-text" style="flex:1;">${esc(l.text)}</div>
+                    <div style="font-size:0.6rem; color:var(--text-dim);">${l.date || ''}</div>
+                    <button onclick="editLogroApp('${currentTareasSection}', ${i})" style="background:none; border:none; color:var(--text-dim); font-size:0.8rem; cursor:pointer;">✏️</button>
+                    <button onclick="deleteLogroApp('${currentTareasSection}', ${i})" style="background:none; border:none; color:#ef4444; font-size:0.8rem; cursor:pointer;">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        // ---- Move / Reorder ----
+        async function moveTarea(tipo, index, direction) {
+            const arr = tareasAppData[tipo];
+            const newIdx = index + direction;
+            if (newIdx < 0 || newIdx >= arr.length) return;
+            [arr[index], arr[newIdx]] = [arr[newIdx], arr[index]];
+            renderTareaList();
+            await saveTareasApp();
+        }
+
+        async function moveLogro(tipo, index, direction) {
+            const key = 'logros_' + tipo;
+            const arr = tareasAppData[key];
+            const newIdx = index + direction;
+            if (newIdx < 0 || newIdx >= arr.length) return;
+            [arr[index], arr[newIdx]] = [arr[newIdx], arr[index]];
+            renderLogroList();
+            await saveTareasApp();
+        }
+
+        // ---- CRUD Tareas ----
         async function saveTareasApp() {
             await postJSON('/api/tareas-app', tareasAppData);
         }
@@ -1373,8 +1493,7 @@
         async function editTareaApp(tipo, index) {
             const t = tareasAppData[tipo][index];
             const text = prompt('Editar tarea:', t.text);
-            if (text === null) return;
-            if (!text.trim()) return;
+            if (text === null || !text.trim()) return;
             tareasAppData[tipo][index].text = text.trim();
             renderTareaList();
             await saveTareasApp();
@@ -1384,6 +1503,36 @@
             if (!confirm('Eliminar esta tarea?')) return;
             tareasAppData[tipo].splice(index, 1);
             renderTareaList();
+            await saveTareasApp();
+        }
+
+        // ---- CRUD Logros ----
+        async function addLogroApp(tipo) {
+            const sec = TAREAS_SECTIONS[tipo];
+            const text = prompt(sec ? sec.logrosPrompt : 'Nuevo logro:');
+            if (!text || !text.trim()) return;
+            const key = 'logros_' + tipo;
+            if (!tareasAppData[key]) tareasAppData[key] = [];
+            tareasAppData[key].push({ text: text.trim(), date: new Date().toISOString().split('T')[0] });
+            renderLogroList();
+            await saveTareasApp();
+        }
+
+        async function editLogroApp(tipo, index) {
+            const key = 'logros_' + tipo;
+            const l = tareasAppData[key][index];
+            const text = prompt('Editar logro:', l.text);
+            if (text === null || !text.trim()) return;
+            tareasAppData[key][index].text = text.trim();
+            renderLogroList();
+            await saveTareasApp();
+        }
+
+        async function deleteLogroApp(tipo, index) {
+            if (!confirm('Eliminar este logro?')) return;
+            const key = 'logros_' + tipo;
+            tareasAppData[key].splice(index, 1);
+            renderLogroList();
             await saveTareasApp();
         }
 

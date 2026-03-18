@@ -68,7 +68,7 @@ ROUTE_MAP = {
     '/api/ideas':         ('ideas', []),
     '/api/power-records': ('power_records', {"launch_date": "", "milestones": [], "kpis": {}, "notes": ""}),
     '/api/cris-velez':    ('cris_velez', {"lanzamientos": [], "tareas": [], "notas": ""}),
-    '/api/tareas-app':    ('tareas_app', {"semana": [], "mes": [], "ano12": []}),
+    '/api/tareas-app':    ('tareas_app', {"semana": [], "mes": [], "ano12": [], "logros_semana": [], "logros_mes": [], "logros_ano12": []}),
 }
 
 # Rutas que aceptan POST (sobreescritura completa)
