@@ -866,8 +866,11 @@
     <div id="loader"></div>
     <div class="container">
         <header onclick="enableAudio()">
+            <div style="display:flex; justify-content:flex-end; margin-bottom:4px;">
+                <button id="langToggleBtn" onclick="event.stopPropagation(); toggleLang()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:5px 14px; color:#fff; font-size:0.7rem; font-weight:700; cursor:pointer; font-family:inherit; transition:all 0.3s;">ES | EN</button>
+            </div>
             <div class="header-brand">POWER GROUP</div>
-            <div class="header-sub">Task Manager</div>
+            <div class="header-sub" data-es="Task Manager" data-en="Task Manager">Task Manager</div>
             <div class="profile-section">
                 <div class="profile-pic">
                     <img src="cris_profile.webp" alt="Cris Velez">
@@ -883,46 +886,46 @@
         <div class="banner-card" onclick="openView('leadsFullView')">
             <div class="banner-icon">🔔</div>
             <div class="banner-text">
-                <div class="banner-title">Leads en Tiempo Real</div>
-                <div class="banner-desc">Recibe alertas de Calendly e Instagram al instante.</div>
+                <div class="banner-title" data-es="Leads en Tiempo Real" data-en="Real-Time Leads">Leads en Tiempo Real</div>
+                <div class="banner-desc" data-es="Recibe alertas de Calendly e Instagram al instante." data-en="Get Calendly and Instagram alerts instantly.">Recibe alertas de Calendly e Instagram al instante.</div>
             </div>
             <div class="banner-arrow">›</div>
         </div>
 
         <!-- SECTION LABEL -->
-        <div class="section-label">Modulos</div>
+        <div class="section-label" data-es="Modulos" data-en="Modules">Modulos</div>
 
         <!-- MAIN GRID -->
         <div class="main-grid">
             <div class="vibe-card vibe-purple" onclick="openView('tareasDiaView')">
                 <div class="vibe-icon">📋</div>
-                <div class="vibe-title">Tareas</div>
-                <div class="vibe-desc">Gestion de tareas diarias</div>
-                <button class="vibe-btn">Abrir</button>
+                <div class="vibe-title" data-es="Tareas" data-en="Tasks">Tareas</div>
+                <div class="vibe-desc" data-es="Gestion de tareas diarias" data-en="Daily task management">Gestion de tareas diarias</div>
+                <button class="vibe-btn" data-es="Abrir" data-en="Open">Abrir</button>
             </div>
             <div class="vibe-card vibe-green" onclick="openView('powerRecordsView')">
                 <div class="vibe-icon">🎵</div>
                 <div class="vibe-title">Power Records</div>
-                <div class="vibe-desc">Lanzamiento AI</div>
-                <button class="vibe-btn">Abrir</button>
+                <div class="vibe-desc" data-es="Lanzamiento AI" data-en="AI Launch">Lanzamiento AI</div>
+                <button class="vibe-btn" data-es="Abrir" data-en="Open">Abrir</button>
             </div>
             <div class="vibe-card vibe-blue" onclick="openView('seguimientoPipeView')">
                 <div class="vibe-icon">🎛️</div>
-                <div class="vibe-title">Producciones</div>
-                <div class="vibe-desc">Seguimiento musical</div>
-                <button class="vibe-btn">Abrir</button>
+                <div class="vibe-title" data-es="Producciones" data-en="Productions">Producciones</div>
+                <div class="vibe-desc" data-es="Seguimiento musical" data-en="Music tracking">Seguimiento musical</div>
+                <button class="vibe-btn" data-es="Abrir" data-en="Open">Abrir</button>
             </div>
             <div class="vibe-card vibe-orange" onclick="openView('artistaGiraView')">
                 <div class="vibe-icon">💰</div>
-                <div class="vibe-title">Ventas</div>
-                <div class="vibe-desc">Todos los productos</div>
-                <button class="vibe-btn">Abrir</button>
+                <div class="vibe-title" data-es="Ventas" data-en="Sales">Ventas</div>
+                <div class="vibe-desc" data-es="Todos los productos" data-en="All products">Todos los productos</div>
+                <button class="vibe-btn" data-es="Abrir" data-en="Open">Abrir</button>
             </div>
             <div class="vibe-card vibe-teal" onclick="openView('crisVelezView')" style="grid-column: 1 / -1;">
                 <div class="vibe-icon">🎤</div>
                 <div class="vibe-title">Cris Velez</div>
-                <div class="vibe-desc">Proyecto artista personal</div>
-                <button class="vibe-btn">Abrir</button>
+                <div class="vibe-desc" data-es="Proyecto artista personal" data-en="Personal artist project">Proyecto artista personal</div>
+                <button class="vibe-btn" data-es="Abrir" data-en="Open">Abrir</button>
             </div>
         </div>
 
@@ -930,8 +933,8 @@
         <div class="menu-card" onclick="openView('seguimientoEquipoView')">
             <div class="menu-icon bg-pink">👥</div>
             <div class="menu-text">
-                <div class="menu-title">Equipo</div>
-                <div class="menu-desc">Seguimiento de tareas del equipo</div>
+                <div class="menu-title" data-es="Equipo" data-en="Team">Equipo</div>
+                <div class="menu-desc" data-es="Seguimiento de tareas del equipo" data-en="Team task tracking">Seguimiento de tareas del equipo</div>
             </div>
             <div class="menu-arrow">›</div>
         </div>
@@ -940,7 +943,7 @@
             <div class="menu-icon bg-purple">🤖</div>
             <div class="menu-text">
                 <div class="menu-title">Prompts</div>
-                <div class="menu-desc">Contextos y plantillas AI</div>
+                <div class="menu-desc" data-es="Contextos y plantillas AI" data-en="AI contexts and templates">Contextos y plantillas AI</div>
             </div>
             <div class="menu-arrow">›</div>
         </div>
@@ -948,16 +951,16 @@
         <div class="menu-card" onclick="openView('innovacionView')">
             <div class="menu-icon bg-orange">💡</div>
             <div class="menu-text">
-                <div class="menu-title">Innovacion / Ideas</div>
-                <div class="menu-desc">Captura y evalua nuevas ideas</div>
+                <div class="menu-title" data-es="Innovacion / Ideas" data-en="Innovation / Ideas">Innovacion / Ideas</div>
+                <div class="menu-desc" data-es="Captura y evalua nuevas ideas" data-en="Capture and evaluate new ideas">Captura y evalua nuevas ideas</div>
             </div>
             <div class="menu-arrow">›</div>
         </div>
 
         <!-- LEADS SECTION -->
-        <div class="section-label" style="margin-top: 28px;">Leads Recientes</div>
+        <div class="section-label" style="margin-top: 28px;" data-es="Leads Recientes" data-en="Recent Leads">Leads Recientes</div>
         <div id="leadsContainer" class="leads-container">
-            <div style="font-size: 0.8rem; opacity: 0.4; padding: 10px;">Esperando nuevos leads...</div>
+            <div style="font-size: 0.8rem; opacity: 0.4; padding: 10px;" data-es="Esperando nuevos leads..." data-en="Waiting for new leads...">Esperando nuevos leads...</div>
         </div>
 
         <div style="display: none;">
@@ -971,7 +974,7 @@
     <div class="view-modal" id="tareasDiaView">
         <div class="view-header">
             <button class="back-btn" onclick="closeView('tareasDiaView')">←</button>
-            <h2 class="view-title">Tareas</h2>
+            <h2 class="view-title" data-es="Tareas" data-en="Tasks">Tareas</h2>
         </div>
         <div class="view-content" id="tareasAppContainer">
             <!-- Clock -->
@@ -984,32 +987,32 @@
             <div id="tareasCardsHub">
                 <div class="vibe-card vibe-purple" onclick="openTareasSection('semana')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
                     <div class="vibe-icon">📅</div>
-                    <div class="vibe-title">Tareas del Dia</div>
+                    <div class="vibe-title" data-es="Tareas del Dia" data-en="Today's Tasks">Tareas del Dia</div>
                     <div class="vibe-desc" id="tareasSemanaBadge">0 tareas</div>
                 </div>
                 <div class="vibe-card vibe-blue" onclick="openTareasSection('mes')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
                     <div class="vibe-icon">🗓️</div>
-                    <div class="vibe-title">Tareas de la Semana</div>
+                    <div class="vibe-title" data-es="Tareas de la Semana" data-en="Weekly Tasks">Tareas de la Semana</div>
                     <div class="vibe-desc" id="tareasMesBadge">0 tareas</div>
                 </div>
                 <div class="vibe-card vibe-orange" onclick="openTareasSection('ano12')" style="margin-bottom:14px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
                     <div class="vibe-icon">🔥</div>
-                    <div class="vibe-title">Año de 12 Semanas</div>
+                    <div class="vibe-title" data-es="Año de 12 Semanas" data-en="12-Week Year">Año de 12 Semanas</div>
                     <div class="vibe-desc" id="tareasAno12Badge">0 tareas</div>
                 </div>
             </div>
 
             <!-- Sub-vista de tareas con swipe Tareas/Logros -->
             <div id="tareasSubView" style="display:none;">
-                <button class="action-btn secondary" onclick="closeTareasSection()" style="margin-bottom:16px;">← Volver</button>
+                <button class="action-btn secondary" onclick="closeTareasSection()" style="margin-bottom:16px;" data-es="← Volver" data-en="← Back">← Volver</button>
                 <div id="tareasSubTitle" style="text-align:center; margin-bottom:12px;">
                     <div id="tareasSubIcon" style="font-size:2.5rem;"></div>
                     <div id="tareasSubName" style="font-size:1.2rem; font-weight:800; margin-top:6px;"></div>
                 </div>
                 <!-- Tabs Tareas / Logros -->
                 <div id="tareasLogrosTab" style="display:flex; margin-bottom:16px; border-radius:12px; overflow:hidden; background:rgba(255,255,255,0.06);">
-                    <button id="tabTareas" onclick="switchTareasTab('tareas')" style="flex:1; padding:10px; border:none; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.3s; font-family:inherit;">Tareas</button>
-                    <button id="tabLogros" onclick="switchTareasTab('logros')" style="flex:1; padding:10px; border:none; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.3s; font-family:inherit;">Logros</button>
+                    <button id="tabTareas" onclick="switchTareasTab('tareas')" style="flex:1; padding:10px; border:none; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.3s; font-family:inherit;" data-es="Tareas" data-en="Tasks">Tareas</button>
+                    <button id="tabLogros" onclick="switchTareasTab('logros')" style="flex:1; padding:10px; border:none; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.3s; font-family:inherit;" data-es="Logros" data-en="Achievements">Logros</button>
                 </div>
                 <!-- Swipe container -->
                 <div id="tareasSwipeContainer" style="overflow:hidden; position:relative; touch-action:pan-y;">
@@ -1017,14 +1020,14 @@
                         <!-- Panel Tareas -->
                         <div style="width:50%; flex-shrink:0;">
                             <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
-                                <button class="action-btn" onclick="addTareaApp(currentTareasSection)" style="font-size:0.7rem; padding:6px 14px;">+ Agregar Tarea</button>
+                                <button class="action-btn" onclick="addTareaApp(currentTareasSection)" style="font-size:0.7rem; padding:6px 14px;" data-es="+ Agregar Tarea" data-en="+ Add Task">+ Agregar Tarea</button>
                             </div>
                             <div id="tareasSubList"></div>
                         </div>
                         <!-- Panel Logros -->
                         <div style="width:50%; flex-shrink:0;">
                             <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
-                                <button class="action-btn" onclick="addLogroApp(currentTareasSection)" style="font-size:0.7rem; padding:6px 14px;">+ Agregar Logro</button>
+                                <button class="action-btn" onclick="addLogroApp(currentTareasSection)" style="font-size:0.7rem; padding:6px 14px;" data-es="+ Agregar Logro" data-en="+ Add Achievement">+ Agregar Logro</button>
                             </div>
                             <div id="logrosSubList"></div>
                         </div>
@@ -1041,7 +1044,7 @@
     <div class="view-modal" id="promptsView">
         <div class="view-header">
             <button class="back-btn" onclick="closeView('promptsView')">←</button>
-            <h2 class="view-title">Prompts y Contextos</h2>
+            <h2 class="view-title" data-es="Prompts y Contextos" data-en="Prompts & Contexts">Prompts y Contextos</h2>
         </div>
         <div class="view-content">
             <div id="promptsContainer" class="prompts-container">
@@ -1055,6 +1058,7 @@
         <div class="view-header">
             <button class="back-btn" onclick="closeView('powerRecordsView')">←</button>
             <h2 class="view-title">Power Records AI</h2>
+
         </div>
         <div class="view-content" id="powerRecordsContent"></div>
     </div>
@@ -1063,7 +1067,7 @@
     <div class="view-modal" id="seguimientoPipeView">
         <div class="view-header">
             <button class="back-btn" onclick="closeView('seguimientoPipeView')">←</button>
-            <h2 class="view-title">Producciones</h2>
+            <h2 class="view-title" data-es="Producciones" data-en="Productions">Producciones</h2>
         </div>
         <div class="view-content" id="pipelineContent"></div>
     </div>
@@ -1072,7 +1076,7 @@
     <div class="view-modal" id="artistaGiraView">
         <div class="view-header">
             <button class="back-btn" onclick="closeView('artistaGiraView')">←</button>
-            <h2 class="view-title">Ventas</h2>
+            <h2 class="view-title" data-es="Ventas" data-en="Sales">Ventas</h2>
         </div>
         <div class="view-content" id="ventasContent"></div>
     </div>
@@ -1081,7 +1085,7 @@
     <div class="view-modal" id="seguimientoEquipoView">
         <div class="view-header">
             <button class="back-btn" onclick="closeView('seguimientoEquipoView')">←</button>
-            <h2 class="view-title">Seguimiento Equipo</h2>
+            <h2 class="view-title" data-es="Seguimiento Equipo" data-en="Team Tracking">Seguimiento Equipo</h2>
         </div>
         <div class="view-content" id="equipoContent"></div>
     </div>
@@ -1090,7 +1094,7 @@
     <div class="view-modal" id="innovacionView">
         <div class="view-header">
             <button class="back-btn" onclick="closeView('innovacionView')">←</button>
-            <h2 class="view-title">Innovacion e Ideas</h2>
+            <h2 class="view-title" data-es="Innovacion e Ideas" data-en="Innovation & Ideas">Innovacion e Ideas</h2>
         </div>
         <div class="view-content" id="ideasContent"></div>
     </div>
@@ -1108,7 +1112,7 @@
     <div class="view-modal" id="leadsFullView">
         <div class="view-header">
             <button class="back-btn" onclick="closeView('leadsFullView')">←</button>
-            <h2 class="view-title">Leads en Tiempo Real</h2>
+            <h2 class="view-title" data-es="Leads en Tiempo Real" data-en="Real-Time Leads">Leads en Tiempo Real</h2>
         </div>
         <div class="view-content" id="leadsFullContent">
             <div id="leadsFullContainer" class="leads-container">
@@ -1120,10 +1124,10 @@
     <!-- COPY MODAL -->
     <div class="modal-overlay" id="copyModal">
         <div class="modal-content">
-            <h3>Copiado Manual Requerido</h3>
-            <p>Manten presionado el texto, selecciona <b>Copiar</b>, y luego presiona Cerrar.</p>
+            <h3 data-es="Copiado Manual Requerido" data-en="Manual Copy Required">Copiado Manual Requerido</h3>
+            <p data-es="Manten presionado el texto, selecciona Copiar, y luego presiona Cerrar." data-en="Long press the text, select Copy, then press Close.">Manten presionado el texto, selecciona <b>Copiar</b>, y luego presiona Cerrar.</p>
             <textarea class="modal-textarea" id="modalTextDisplay" readonly></textarea>
-            <button class="close-modal-btn" onclick="document.getElementById('copyModal').classList.remove('active')">Cerrar</button>
+            <button class="close-modal-btn" onclick="document.getElementById('copyModal').classList.remove('active')" data-es="Cerrar" data-en="Close">Cerrar</button>
         </div>
     </div>
 
@@ -1296,15 +1300,23 @@
                 const timeEl = document.getElementById('clockTime');
                 const dateEl = document.getElementById('clockDate');
                 if (timeEl) {
-                    const h = now.getHours().toString().padStart(2, '0');
+                    let hr = now.getHours();
+                    const ampm = hr >= 12 ? 'PM' : 'AM';
+                    hr = hr % 12 || 12;
                     const m = now.getMinutes().toString().padStart(2, '0');
                     const s = now.getSeconds().toString().padStart(2, '0');
-                    timeEl.textContent = `${h}:${m}:${s}`;
+                    timeEl.textContent = `${hr}:${m}:${s} ${ampm}`;
                 }
                 if (dateEl) {
-                    const dias = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
-                    const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-                    dateEl.textContent = `${dias[now.getDay()]} ${now.getDate()} de ${meses[now.getMonth()]}, ${now.getFullYear()}`;
+                    if (currentLang === 'en') {
+                        const dias = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+                        const meses = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+                        dateEl.textContent = `${dias[now.getDay()]}, ${meses[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+                    } else {
+                        const dias = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+                        const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+                        dateEl.textContent = `${dias[now.getDay()]} ${now.getDate()} de ${meses[now.getMonth()]}, ${now.getFullYear()}`;
+                    }
                 }
             }
             tick();
@@ -1331,9 +1343,10 @@
             const sb = document.getElementById('tareasSemanaBadge');
             const mb = document.getElementById('tareasMesBadge');
             const ab = document.getElementById('tareasAno12Badge');
-            if (sb) sb.textContent = `${tareasAppData.semana.length} tareas`;
-            if (mb) mb.textContent = `${tareasAppData.mes.length} tareas`;
-            if (ab) ab.textContent = `${tareasAppData.ano12.length} tareas`;
+            const word = currentLang === 'en' ? 'tasks' : 'tareas';
+            if (sb) sb.textContent = `${tareasAppData.semana.length} ${word}`;
+            if (mb) mb.textContent = `${tareasAppData.mes.length} ${word}`;
+            if (ab) ab.textContent = `${tareasAppData.ano12.length} ${word}`;
             document.querySelectorAll('#tareasCardsHub .vibe-card').forEach(el => {
                 el.addEventListener('touchstart', () => el.classList.add('glow'), { passive: true });
                 el.addEventListener('touchend', () => setTimeout(() => el.classList.remove('glow'), 200));
@@ -1344,7 +1357,7 @@
         function openTareasSection(tipo) {
             currentTareasSection = tipo;
             currentTareasTab = 'tareas';
-            const sec = TAREAS_SECTIONS[tipo];
+            const sec = TAREAS_SECTIONS_DYNAMIC[tipo];
             document.getElementById('tareasCardsHub').style.display = 'none';
             document.getElementById('tareasSubView').style.display = 'block';
             document.getElementById('tareasSubIcon').textContent = sec.icon;
@@ -1364,7 +1377,7 @@
             const track = document.getElementById('tareasSwipeTrack');
             const tabTareas = document.getElementById('tabTareas');
             const tabLogros = document.getElementById('tabLogros');
-            const sec = TAREAS_SECTIONS[currentTareasSection];
+            const sec = TAREAS_SECTIONS_DYNAMIC[currentTareasSection];
             const nameEl = document.getElementById('tareasSubName');
             if (tab === 'tareas') {
                 track.style.transform = 'translateX(0)';
@@ -1408,7 +1421,7 @@
             if (!currentTareasSection) return;
             const tareas = tareasAppData[currentTareasSection] || [];
             if (tareas.length === 0) {
-                c.innerHTML = '<div style="text-align:center; padding:30px; opacity:0.3; font-size:0.85rem;">Sin tareas</div>';
+                c.innerHTML = `<div style="text-align:center; padding:30px; opacity:0.3; font-size:0.85rem;">${currentLang === 'en' ? 'No tasks' : 'Sin tareas'}</div>`;
                 return;
             }
             c.innerHTML = tareas.map((t, i) => `
@@ -1432,7 +1445,7 @@
             const logrosKey = 'logros_' + currentTareasSection;
             const logros = tareasAppData[logrosKey] || [];
             if (logros.length === 0) {
-                c.innerHTML = '<div style="text-align:center; padding:30px; opacity:0.3; font-size:0.85rem;">Sin logros registrados</div>';
+                c.innerHTML = `<div style="text-align:center; padding:30px; opacity:0.3; font-size:0.85rem;">${currentLang === 'en' ? 'No achievements recorded' : 'Sin logros registrados'}</div>`;
                 return;
             }
             c.innerHTML = logros.map((l, i) => `
@@ -1476,7 +1489,7 @@
         }
 
         async function addTareaApp(tipo) {
-            const sec = TAREAS_SECTIONS[tipo];
+            const sec = TAREAS_SECTIONS_DYNAMIC[tipo];
             const text = prompt(sec ? sec.prompt : 'Nueva tarea:');
             if (!text || !text.trim()) return;
             tareasAppData[tipo].push({ text: text.trim(), done: false });
@@ -1492,7 +1505,7 @@
 
         async function editTareaApp(tipo, index) {
             const t = tareasAppData[tipo][index];
-            const text = prompt('Editar tarea:', t.text);
+            const text = prompt(currentLang === 'en' ? 'Edit task:' : 'Editar tarea:', t.text);
             if (text === null || !text.trim()) return;
             tareasAppData[tipo][index].text = text.trim();
             renderTareaList();
@@ -1500,7 +1513,7 @@
         }
 
         async function deleteTareaApp(tipo, index) {
-            if (!confirm('Eliminar esta tarea?')) return;
+            if (!confirm(currentLang === 'en' ? 'Delete this task?' : 'Eliminar esta tarea?')) return;
             tareasAppData[tipo].splice(index, 1);
             renderTareaList();
             await saveTareasApp();
@@ -1508,7 +1521,7 @@
 
         // ---- CRUD Logros ----
         async function addLogroApp(tipo) {
-            const sec = TAREAS_SECTIONS[tipo];
+            const sec = TAREAS_SECTIONS_DYNAMIC[tipo];
             const text = prompt(sec ? sec.logrosPrompt : 'Nuevo logro:');
             if (!text || !text.trim()) return;
             const key = 'logros_' + tipo;
@@ -1521,7 +1534,7 @@
         async function editLogroApp(tipo, index) {
             const key = 'logros_' + tipo;
             const l = tareasAppData[key][index];
-            const text = prompt('Editar logro:', l.text);
+            const text = prompt(currentLang === 'en' ? 'Edit achievement:' : 'Editar logro:', l.text);
             if (text === null || !text.trim()) return;
             tareasAppData[key][index].text = text.trim();
             renderLogroList();
@@ -1529,7 +1542,7 @@
         }
 
         async function deleteLogroApp(tipo, index) {
-            if (!confirm('Eliminar este logro?')) return;
+            if (!confirm(currentLang === 'en' ? 'Delete this achievement?' : 'Eliminar este logro?')) return;
             const key = 'logros_' + tipo;
             tareasAppData[key].splice(index, 1);
             renderLogroList();
@@ -2280,6 +2293,131 @@
             el.addEventListener('touchend', () => setTimeout(() => el.classList.remove('glow'), 200));
             el.addEventListener('touchcancel', () => el.classList.remove('glow'));
         });
+
+        // ============ LANGUAGE TOGGLE ============
+        let currentLang = localStorage.getItem('pg_lang') || 'es';
+
+        const LANG_STRINGS = {
+            // Tareas sections
+            'Tareas del Dia': "Today's Tasks",
+            'Tareas de la Semana': 'Weekly Tasks',
+            'Año de 12 Semanas': '12-Week Year',
+            'Logros del Dia': "Today's Achievements",
+            'Logros de la Semana': "Weekly Achievements",
+            'Logros Año de 12 Semanas': '12-Week Year Achievements',
+            // Dynamic render strings
+            'tareas': 'tasks',
+            'Sin tareas': 'No tasks',
+            'Sin logros registrados': 'No achievements recorded',
+            'Nueva tarea del dia:': "New today's task:",
+            'Nueva tarea de la semana:': 'New weekly task:',
+            'Nueva meta / tarea del año de 12 semanas:': 'New 12-week year goal/task:',
+            'Nuevo logro del dia:': "New today's achievement:",
+            'Nuevo logro de la semana:': "New weekly achievement:",
+            'Nuevo logro del año de 12 semanas:': "New 12-week year achievement:",
+            'Editar tarea:': 'Edit task:',
+            'Editar logro:': 'Edit achievement:',
+            'Eliminar esta tarea?': 'Delete this task?',
+            'Eliminar este logro?': 'Delete this achievement?',
+            'Nueva tarea:': 'New task:',
+            'Nuevo logro:': 'New achievement:',
+            // Clock
+            'Domingo': 'Sunday', 'Lunes': 'Monday', 'Martes': 'Tuesday', 'Miercoles': 'Wednesday',
+            'Jueves': 'Thursday', 'Viernes': 'Friday', 'Sabado': 'Saturday',
+            'Enero': 'January', 'Febrero': 'February', 'Marzo': 'March', 'Abril': 'April',
+            'Mayo': 'May', 'Junio': 'June', 'Julio': 'July', 'Agosto': 'August',
+            'Septiembre': 'September', 'Octubre': 'October', 'Noviembre': 'November', 'Diciembre': 'December',
+            ' de ': ' ',
+            // Render dynamic
+            'Lanzamientos': 'Releases',
+            'No hay lanzamientos': 'No releases',
+            'Tareas Personales': 'Personal Tasks',
+            'Notas': 'Notes',
+            'Notas personales...': 'Personal notes...',
+            'Notas del proyecto...': 'Project notes...',
+            'Nueva tarea...': 'New task...',
+            'Nombre de la cancion': 'Song name',
+            'Fecha de lanzamiento (YYYY-MM-DD)': 'Release date (YYYY-MM-DD)',
+            'Agregar': 'Add',
+            'Esperando nuevos leads...': 'Waiting for new leads...',
+            'Cargando prompts...': 'Loading prompts...',
+            'Listo!': 'Done!',
+            'planificado': 'planned', 'en_progreso': 'in_progress', 'grabacion': 'recording',
+            'mezcla': 'mixing', 'master': 'master', 'lanzado': 'released',
+            'nueva': 'new', 'en_evaluacion': 'evaluating', 'aprobada': 'approved',
+            'en_desarrollo': 'in_development', 'completada': 'completed', 'descartada': 'discarded',
+            'leads': 'leads',
+        };
+
+        // Reverse map for EN -> ES
+        const LANG_STRINGS_REV = {};
+        for (const [es, en] of Object.entries(LANG_STRINGS)) {
+            LANG_STRINGS_REV[en] = es;
+        }
+
+        function t(text) {
+            if (currentLang === 'es') return text;
+            return LANG_STRINGS[text] || text;
+        }
+
+        function tRev(text) {
+            if (currentLang === 'es') return text;
+            return LANG_STRINGS_REV[text] || text;
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            localStorage.setItem('pg_lang', currentLang);
+            applyLang();
+            // Update button
+            const btn = document.getElementById('langToggleBtn');
+            btn.textContent = currentLang === 'es' ? 'ES | EN' : 'EN | ES';
+            btn.style.background = currentLang === 'en' ? 'var(--accent)' : 'rgba(255,255,255,0.08)';
+        }
+
+        function applyLang() {
+            // Translate all elements with data-es/data-en attributes
+            document.querySelectorAll('[data-es][data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+            // Re-render active views to apply translations
+            if (currentTareasSection) {
+                switchTareasTab(currentTareasTab);
+            }
+            renderTareasHub();
+        }
+
+        // Override TAREAS_SECTIONS to use translation
+        const TAREAS_SECTIONS_ORIG = {
+            semana: { name_es: 'Tareas del Dia', name_en: "Today's Tasks", logrosName_es: 'Logros del Dia', logrosName_en: "Today's Achievements", icon: '📅', prompt_es: 'Nueva tarea del dia:', prompt_en: "New today's task:", logrosPrompt_es: 'Nuevo logro del dia:', logrosPrompt_en: "New today's achievement:" },
+            mes: { name_es: 'Tareas de la Semana', name_en: 'Weekly Tasks', logrosName_es: 'Logros de la Semana', logrosName_en: 'Weekly Achievements', icon: '🗓️', prompt_es: 'Nueva tarea de la semana:', prompt_en: 'New weekly task:', logrosPrompt_es: 'Nuevo logro de la semana:', logrosPrompt_en: 'New weekly achievement:' },
+            ano12: { name_es: 'Año de 12 Semanas', name_en: '12-Week Year', logrosName_es: 'Logros Año de 12 Semanas', logrosName_en: '12-Week Year Achievements', icon: '🔥', prompt_es: 'Nueva meta / tarea del año de 12 semanas:', prompt_en: 'New 12-week year goal/task:', logrosPrompt_es: 'Nuevo logro del año de 12 semanas:', logrosPrompt_en: 'New 12-week year achievement:' },
+        };
+
+        // Patch TAREAS_SECTIONS to be dynamic
+        Object.defineProperty(window, 'TAREAS_SECTIONS_DYNAMIC', {
+            get() {
+                const result = {};
+                for (const [key, val] of Object.entries(TAREAS_SECTIONS_ORIG)) {
+                    result[key] = {
+                        name: val[`name_${currentLang}`],
+                        logrosName: val[`logrosName_${currentLang}`],
+                        icon: val.icon,
+                        prompt: val[`prompt_${currentLang}`],
+                        logrosPrompt: val[`logrosPrompt_${currentLang}`],
+                    };
+                }
+                return result;
+            }
+        });
+
+        // Apply on load
+        if (currentLang !== 'es') {
+            const btn = document.getElementById('langToggleBtn');
+            btn.textContent = 'EN | ES';
+            btn.style.background = 'var(--accent)';
+            setTimeout(applyLang, 100);
+        }
 
         // ============ INIT ============
         fetchData();
